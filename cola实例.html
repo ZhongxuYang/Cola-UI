@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="./cola-ui/semantic.css"/>
+		<link rel="stylesheet" type="text/css" href="./cola-ui/cola.css"/>
+		<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	    <script src="./cola-ui/3rd.js"></script>
+	    <script src="./cola-ui/semantic.js"></script>
+	    <script src="./cola-ui/cola.js"></script>
+	    <script type="text/javascript">
+	    	cola(function(model){
+	    		model.set({
+	    			guolv: '',
+	    			employees: [
+	    				{
+	    					name: "杨中旭",
+	    					phone: "15840404181",
+	    					email: "scriptmail@163.com"
+	    				},
+	    				{
+	    					name: "周杰伦",
+	    					phone: "17600663290",
+	    					email: "himatthew@foxmail.com"
+	    				},
+	    				{
+	    					name: "孙燕姿",
+	    					phone: "17672839922",
+	    					email: "himatthew@126.com"
+	    				}
+	    			],
+	    			items: [
+		    			{
+		    				color: "blue", 
+		    				content: "Blue"
+		    			},
+		                {
+		                	color: "red", 
+		                	content: "Red"
+		                },
+		                {
+		                	color: "yellow", 
+		                	content: "Yellow"
+		                },
+		                {
+		                	color: "orange", 
+		                	content: "Orange"
+		                }
+	    			],
+	    			sections: [
+	    				{
+	    					text: "Cola教程",
+	    					href: "http://cola-ui.com/"
+	    				},
+	    				{
+	    					text: "Jade教程",
+	    					href: "http://www.w3cplus.com/html/jade.html"
+	    				},
+	    				{
+	    					text: "Github",
+	    					href: "https://github.com/"
+	    				}
+	    			],
+	    			progress: '0'
+	    		});
+	    		
+	    		let num = 0;
+	    		setInterval(function(){
+					num+=5;
+					if( num>100 ){
+						num = 0;
+					}
+	    			model.set("progress",num);
+	    		},200)
+	    		
+	    		model.action({
+	    			success: function(){
+		                cola.NotifyTipManager.success({
+		                    message: "搜索成功",description: "人物已搜索到！", showDuration: 1000
+		                });
+	    			},
+	    			warning: function () {
+		                cola.NotifyTipManager.warning({
+		                    message: "搜索警告",
+		                    description: "您搜索的人物不存在！"
+		                });
+		           	},
+		           	plus: function(){
+		           		console.log("添加")
+		           		
+		          	},
+		          	minus: function(){
+		           		console.log("删除")
+		          		
+		          	},
+		          	edit: function(){
+		           		console.log("修改")
+		          		
+		          	},
+		          	save: function(){
+		           		console.log("保存")
+		          		
+		          	}
+	    		});
+	    		
+	    		//定义一个树状结构的数据类型
+				model.dataType({
+					name: "Node",
+					properties: {//特性
+						nodes: {//节点
+							dataType: "Node",
+							provider: {//提供
+								url: "http://open-data.cola-ui.com/service/district/children",
+								parameter: {//参数
+									parentId: "{{@id}}"
+								}
+							}
+						}
+					}
+				});
+				model.describe("nodes", {//描述
+					dataType: "Node",
+					provider: "http://open-data.cola-ui.com/service/district/provinces"
+				});
+				model.widgetConfig({
+					fileTree: {
+						bind: {
+							hasChildProperty: "isDir",
+							expression: "node in nodes",
+							textProperty:"name",
+							child: {
+								recursive: true,
+								hasChildProperty: "isDir",
+								textProperty:"name",
+								expression: "node in node.nodes"
+							}
+						},
+						style: {
+							width: "20%",
+							height: "100%",
+							float: "left"
+						}
+					}
+				});
+        
+	    		var render = cola.xRender([
+	    			{
+	    				//header
+		    			style: {
+		    				height: "80px",
+		    				padding: "0 48px",
+		    				background: "#0a68b9"
+		    			},
+		    			content: [
+		    				{
+		    					//logo
+		    					content: "Cola-UI",
+		    					style: {
+		    						fontSize: "50px",
+		    						color: "#fff",
+		    						lineHeight: "80px",
+		    						float: "left"
+		    					}
+		    				},
+		    				{
+		    					//搜索框
+		    					style: {
+		    						float: "left",
+		    						padding: "20px 0 0 20px"
+		    					},
+		    					content: [
+		    						{
+			    						tagName: "c-input",
+				    					placeHolder: "过滤人物",
+				    					icon: "search",
+				    					"c-bind": "guolv",
+				    					click: function(){
+				    						console.log("要弹出搜索记录啦");
+				    						model.action("success")();//通过这种方式调用action中定义的函数
+				    					},
+				    					"c-onblur": function(){
+				    						console.log("我失焦了")
+				    						var txt = model.get("guolv");
+				    						console.log(txt)
+				    					}
+				    				},
+				    				{
+				    					tagName: "span",
+				    					style: {
+				    						paddingLeft: "10px",
+				    						color: "#fff",
+				    						fontWeight: "bold"
+				    					},
+				    					"c-bind": "guolv"
+				    				}
+		    					]
+		    				}
+		    			]
+		    		}
+	    		]);
+	    		$("#content").before(render);
+	    		
+	    		setTimeout(function(){
+	    			cola.widget("carousel1").play(2000);
+	    		});
+
+	    	});
+	    </script>
+		<title></title>
+	</head>
+	<body>
+		<div id="content">
+			<c-carousel id="carousel1"  height="100" style="width: 80%;float: right;">
+				<div class="items-wrap">
+					<a href="#" class="blue-background"></a>
+					<a href="#" class="red-background"></a>
+					<a href="#" class="yellow-background"></a>
+					<a href="#" class="orange-background"></a>
+				</div>
+			</c-carousel>
+			
+			<div style="width: 80%;float: right;">
+				<c-breadcrumb bind="sections" itemClick="itemClick" style="width: 50%;float: left;padding: 10px;"></c-breadcrumb>
+				<c-progress width="50%" value="{{progress}}" style="float: right;"></c-progress>
+			</div>
+			
+			<c-menu style="float: right;width: 80%;">
+				<a icon="plus" caption="添加" click="plus"></a>
+				<a icon="minus" caption="删除" click="minus"></a>
+				<a icon="edit" caption="修改" click="edit"></a>
+				<div class="right menu">
+					<a icon="save" caption="保存" click="save"></a>
+				</div>
+			</c-menu>
+			
+			<c-table bind="filter(employees,guolv)"  sortMode="local" style="width: 80%;float: right;">
+				<!--这里的filter(employees,guolv)是过滤器,employees属性指绑定的数据,guolv与上面header中的搜索框数据对应-->
+				<column property="name" caption="名称" sortable="true"></column>
+				<column caption="基本信息">
+					<column property="phone" caption="电话" sortable="true"></column>
+					<column property="email" caption="邮箱" sortable="true"></column>
+				</column>
+			</c-table>
+			
+			<c-tree id="fileTree"></c-tree>
+		</div>
+	</body>
+</html>

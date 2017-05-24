@@ -1,0 +1,66 @@
+//
+   Created by Think on 2017/5/24.
+doctype html
+html
+    head
+        meta(charset='utf-8')
+        title
+    body
+        div#box.box1.box2
+        ul
+            - for (var i = 0; i < 3; i++)
+                li 我是li
+        p.p1='欢迎使用<strong>jade</strong>'
+        p.p2!='欢迎使用<strong>jade</strong>'
+
+        - var name = '杨中旭'
+            p 这里展示特殊字符:我的名字是#{name}
+            p 这里展示不转义字符:我的名字是\#{name}
+
+        - var name = '<script></script>'
+            p 这里是正常在jade里写变量的写法(自动转义了特殊字符):#{name}
+            p 要得到不转义这么写(把#换成!):!{name}
+
+        h3 数组循环这样做:
+        ol
+            - var arrays = ['数组里第1项','数组里第2项','数组里第3项','数组里第4项','数组里第5项','数组里第6项']
+                each array in arrays
+                    li= array
+
+        h3 对象循环这样做:
+        ol
+            - var objs = {'姓名':'杨中旭','年龄':'18','手机':'15840404181','职业':'前端'}
+                each val,key in objs
+                    li #{key} : #{val}
+
+        h3 case主要作用和js中的switch一样:
+        - var num = 99
+            case num
+                when 0
+                    p 我没有对象
+                when 99
+                    p 我有99个对象
+                default
+                    p 我也不知道我有几个对象
+
+        h3 mixin模式
+            em 实际上就类似于js中的函数,可以通过名字多次调用,也可以传参
+        div
+            h4 无参数版mixin
+            mixin join
+                ul
+                    li 像你
+                    li 像他
+                    li 像野草
+                    li 野花
+            +join()
+
+            h4 有参数版mixin
+            mixin join(word)
+                ul
+                    li #{word}你
+                    li #{word}他
+                    li #{word}野草
+                    li #{word}野花
+            +join('不像')
+            +join('到底像不像')
