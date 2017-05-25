@@ -8,102 +8,157 @@
 	    <script src="./cola-ui/3rd.js"></script>
 	    <script src="./cola-ui/semantic.js"></script>
 	    <script src="./cola-ui/cola.js"></script>
-	    <script type="text/javascript">
-	    	cola(function(model){
-	    		model.set({
-	    			guolv: '',
-	    			employees: [
-	    				{
-	    					name: "杨中旭",
-	    					phone: "15840404181",
-	    					email: "scriptmail@163.com"
-	    				},
-	    				{
-	    					name: "周杰伦",
-	    					phone: "17600663290",
-	    					email: "himatthew@foxmail.com"
-	    				},
-	    				{
-	    					name: "孙燕姿",
-	    					phone: "17672839922",
-	    					email: "himatthew@126.com"
-	    				}
-	    			],
-	    			items: [
-		    			{
-		    				color: "blue", 
-		    				content: "Blue"
-		    			},
-		                {
-		                	color: "red", 
-		                	content: "Red"
-		                },
-		                {
-		                	color: "yellow", 
-		                	content: "Yellow"
-		                },
-		                {
-		                	color: "orange", 
-		                	content: "Orange"
-		                }
-	    			],
-	    			sections: [
-	    				{
-	    					text: "Cola教程",
-	    					href: "http://cola-ui.com/"
-	    				},
-	    				{
-	    					text: "Jade教程",
-	    					href: "http://www.w3cplus.com/html/jade.html"
-	    				},
-	    				{
-	    					text: "Github",
-	    					href: "https://github.com/"
-	    				}
-	    			],
-	    			progress: '0'
-	    		});
-	    		
-	    		let num = 0;
-	    		setInterval(function(){
+		<script type="text/javascript">
+			cola(function(model){
+				model.set({
+					guolv: '',
+					employees: [
+						{
+							name: "杨中旭",
+							phone: "15840404181",
+							email: "scriptmail@163.com",
+							star: '5'
+						},
+						{
+							name: "周杰伦",
+							phone: "17600663290",
+							email: "himatthew@foxmail.com",
+							star: '2',
+							job: {
+								name: "歌手"
+							}
+						},
+						{
+							name: "孙燕姿",
+							phone: "17672839922",
+							email: "himatthew@126.com",
+							star: '4'
+						}
+					],
+					job: [
+						{name: "前端"},
+						{name: "后端"},
+						{name: "测试"},
+						{name: "产品"},
+						{name: "运营"},
+						{name: "人事"}
+					],
+					items: [
+						{
+							color: "blue",
+							content: "Blue"
+						},
+						{
+							color: "red",
+							content: "Red"
+						},
+						{
+							color: "yellow",
+							content: "Yellow"
+						},
+						{
+							color: "orange",
+							content: "Orange"
+						}
+					],
+					sections: [
+						{
+							text: "Cola教程",
+							href: "http://cola-ui.com/"
+						},
+						{
+							text: "Jade教程",
+							href: "http://www.w3cplus.com/html/jade.html"
+						},
+						{
+							text: "Github",
+							href: "https://github.com/"
+						}
+					],
+					progress: '0',
+					cValue: true,
+					p: "这是面板控件",
+					items: [
+						{
+							icon: "magnet",
+							content: {
+								title: "习近平：努力建设一支强大的现代化海军",
+								description: "努力建设一支强大的现代化海军努力建设一支强大的现代化海军努力建设一支强大的现代化海军努力建设一支强大的现代化海军"
+							},
+							time: {
+								date: "2017/5/25",
+								time: "15:43"
+							}
+						},
+						{
+							icon: "bullseye",
+							content: {
+								title: "台高官称不能因大陆崛起而投降 国台办回应",
+								description: "努力建设一支强大的现代化海军努力建设一支强大的现代化海军努力建设一支强大的现代化海军努力建设一支强大的现代化海军"
+							},
+							time: {
+								date: "2017/4/27",
+								time: "15:43"
+							}
+						},
+						{
+							icon: "diamond",
+							content: {
+								title: "李克强：政府要管住那只“闲不住的手”",
+								description: "努力建设一支强大的现代化海军努力建设一支强大的现代化海军努力建设一支强大的现代化海军努力建设一支强大的现代化海军"
+							},
+							time: {
+								date: "2017/3/05",
+								time: "15:43"
+							}
+						},
+					]
+				});
+
+				let num = 0;
+				setInterval(function(){
 					num+=5;
 					if( num>100 ){
 						num = 0;
 					}
-	    			model.set("progress",num);
-	    		},200)
-	    		
-	    		model.action({
-	    			success: function(){
-		                cola.NotifyTipManager.success({
-		                    message: "搜索成功",description: "人物已搜索到！", showDuration: 1000
-		                });
-	    			},
-	    			warning: function () {
-		                cola.NotifyTipManager.warning({
-		                    message: "搜索警告",
-		                    description: "您搜索的人物不存在！"
-		                });
-		           	},
-		           	plus: function(){
-		           		console.log("添加")
-		           		
-		          	},
-		          	minus: function(){
-		           		console.log("删除")
-		          		
-		          	},
-		          	edit: function(){
-		           		console.log("修改")
-		          		
-		          	},
-		          	save: function(){
-		           		console.log("保存")
-		          		
-		          	}
-	    		});
-	    		
-	    		//定义一个树状结构的数据类型
+					model.set("progress",num);
+				},200)
+
+				model.action({
+					success: function(){
+						cola.NotifyTipManager.success({
+							message: "搜索成功",description: "人物已搜索到！", showDuration: 1000
+						});
+					},
+					warning: function () {
+						cola.NotifyTipManager.warning({
+							message: "搜索警告",
+							description: "您搜索的人物不存在！"
+						});
+					},
+					plus: function(){
+						console.log("添加")
+
+					},
+					minus: function(){
+						console.log("删除")
+					},
+					edit: function(){
+						console.log("修改")
+
+					},
+					save: function(){
+						console.log("保存")
+					},
+					add: function (n) {
+						cola.widget(n).show();
+					},
+					hide: function (parent) {
+						cola.widget(parent).hide();
+					}
+				});
+
+				//定义一个树状结构的数据类型
 				model.dataType({
 					name: "Node",
 					properties: {//特性
@@ -142,107 +197,176 @@
 						}
 					}
 				});
-        
-	    		var render = cola.xRender([
-	    			{
-	    				//header
-		    			style: {
-		    				height: "80px",
-		    				padding: "0 48px",
-		    				background: "#0a68b9"
-		    			},
-		    			content: [
-		    				{
-		    					//logo
-		    					content: "Cola-UI",
-		    					style: {
-		    						fontSize: "50px",
-		    						color: "#fff",
-		    						lineHeight: "80px",
-		    						float: "left"
-		    					}
-		    				},
-		    				{
-		    					//搜索框
-		    					style: {
-		    						float: "left",
-		    						padding: "20px 0 0 20px"
-		    					},
-		    					content: [
-		    						{
-			    						tagName: "c-input",
-				    					placeHolder: "过滤人物",
-				    					icon: "search",
-				    					"c-bind": "guolv",
-				    					click: function(){
-				    						console.log("要弹出搜索记录啦");
-				    						model.action("success")();//通过这种方式调用action中定义的函数
-				    					},
-				    					"c-onblur": function(){
-				    						console.log("我失焦了")
-				    						var txt = model.get("guolv");
-				    						console.log(txt)
-				    					}
-				    				},
-				    				{
-				    					tagName: "span",
-				    					style: {
-				    						paddingLeft: "10px",
-				    						color: "#fff",
-				    						fontWeight: "bold"
-				    					},
-				    					"c-bind": "guolv"
-				    				}
-		    					]
-		    				}
-		    			]
-		    		}
-	    		]);
-	    		$("#content").before(render);
-	    		
-	    		setTimeout(function(){
-	    			cola.widget("carousel1").play(2000);
-	    		});
 
-	    	});
-	    </script>
+				var render = cola.xRender([
+					{
+						//header
+						id: "header",
+						style: {
+							height: "80px",
+							padding: "0 48px",
+							background: "#0a68b9",
+							transition: "1s"
+						},
+						content: [
+							{
+								//logo
+								content: "Cola-UI",
+								style: {
+									fontSize: "50px",
+									color: "#fff",
+									lineHeight: "80px",
+									float: "left"
+								}
+							},
+							{
+								//搜索框
+								style: {
+									float: "left",
+									padding: "20px 0 0 20px"
+								},
+								content: [
+									{
+										tagName: "c-input",
+										placeHolder: "过滤人物",
+										icon: "search",
+										"c-bind": "guolv",
+										click: function(){
+											console.log("要弹出搜索记录啦");
+											model.action("success")();//通过这种方式调用action中定义的函数
+										},
+										"c-onblur": function(){
+											console.log("我失焦了")
+											var txt = model.get("guolv");
+											console.log(txt)
+										}
+									},
+									{
+										tagName: "span",
+										style: {
+											paddingLeft: "10px",
+											color: "#fff",
+											fontWeight: "bold"
+										},
+										"c-bind": "guolv"
+									},
+									{
+										tagName: "c-toggle",
+										bind: "cValue",
+										style: {
+											position: "absolute",
+											right: "0",
+											padding: "10px"
+										},
+										click: function () {
+											if(model.get("cValue")){
+												$("#header").css("background","#148B74");
+											}else{
+												$("#header").css("background","#0a68b9");
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				]);
+				$("#content").before(render);
+
+				setTimeout(function(){
+					cola.widget("carousel1").play(2000);
+				});
+
+			});
+		</script>
 		<title></title>
 	</head>
 	<body>
-		<div id="content">
-			<c-carousel id="carousel1"  height="100" style="width: 80%;float: right;">
-				<div class="items-wrap">
-					<a href="#" class="blue-background"></a>
-					<a href="#" class="red-background"></a>
-					<a href="#" class="yellow-background"></a>
-					<a href="#" class="orange-background"></a>
-				</div>
-			</c-carousel>
-			
-			<div style="width: 80%;float: right;">
-				<c-breadcrumb bind="sections" itemClick="itemClick" style="width: 50%;float: left;padding: 10px;"></c-breadcrumb>
-				<c-progress width="50%" value="{{progress}}" style="float: right;"></c-progress>
+	<div id="content">
+		<c-carousel id="carousel1"  height="100" style="width: 80%;float: right;">
+			<div class="items-wrap">
+				<a href="#" class="blue-background"></a>
+				<a href="#" class="red-background"></a>
+				<a href="#" class="yellow-background"></a>
+				<a href="#" class="orange-background"></a>
 			</div>
-			
-			<c-menu style="float: right;width: 80%;">
-				<a icon="plus" caption="添加" click="plus"></a>
-				<a icon="minus" caption="删除" click="minus"></a>
-				<a icon="edit" caption="修改" click="edit"></a>
-				<div class="right menu">
-					<a icon="save" caption="保存" click="save"></a>
-				</div>
-			</c-menu>
-			
-			<c-table bind="filter(employees,guolv)"  sortMode="local" style="width: 80%;float: right;">
-				<!--这里的filter(employees,guolv)是过滤器,employees属性指绑定的数据,guolv与上面header中的搜索框数据对应-->
-				<column property="name" caption="名称" sortable="true"></column>
-				<column caption="基本信息">
-					<column property="phone" caption="电话" sortable="true"></column>
-					<column property="email" caption="邮箱" sortable="true"></column>
-				</column>
-			</c-table>
-			
-			<c-tree id="fileTree"></c-tree>
+		</c-carousel>
+
+		<div style="width: 80%;float: right;">
+			<c-breadcrumb bind="sections" itemClick="itemClick" style="width: 50%;float: left;padding: 10px;"></c-breadcrumb>
+			<c-progress width="50%" value="{{progress}}" style="float: right;"></c-progress>
 		</div>
+
+		<c-menu style="float: right;width: 80%;">
+			<a icon="plus" caption="添加" click="plus"></a>
+			<a icon="minus" caption="删除" click="minus"></a>
+			<a icon="edit" caption="修改" click="edit"></a>
+			<div class="right menu">
+				<a icon="save" caption="保存" click="save"></a>
+			</div>
+		</c-menu>
+
+		<c-table bind="employee in filter(employees,guolv)"  sortMode="local" style="width: 80%;float: right;">
+			<!--这里的filter(employees,guolv)是过滤器,employees属性指绑定的数据,guolv与上面header中的搜索框数据对应-->
+			<template name="star">
+				<c-rating c-rating="$default" maxRating="5" class="star"></c-rating>
+				<!--模板里数据绑定可以用$default,就可以自动绑定该绑定的数据-->
+			</template>
+			<template name="job">
+				<c-dropdown c-bind="employee.selected" valueProperty="name" textProperty="name" filterable="true" c-items="job"></c-dropdown>
+			</template>
+			<column property="name" caption="名称" sortable="true"></column>
+			<column caption="基本信息">
+				<column property="phone" caption="电话" sortable="true"></column>
+				<column property="email" caption="邮箱" sortable="true"></column>
+				<column caption="职业" sortable="true" template="job"></column>
+				<column property="star" caption="评分" sortable="true" template="star"></column>
+				<!--可以在表格组件里插入另一个组件,用template,通过name指向,见文档'自定义单元格'-->
+			</column>
+		</c-table>
+
+		<c-panel caption="面板控件" style="width: 80%;float: right">
+			<template name="tools">
+				<div>
+					<c-button caption="添加" c-onclick="add('dialog1')"></c-button>
+					<c-button caption="保存" c-onclick="save"></c-button>
+				</div>
+			</template>
+			<div class="content">
+				<c-segment height="100px" c-bind="p"></c-segment>
+			</div>
+		</c-panel>
+
+		<!--弹出框-->
+		<c-dialog id="dialog1" width="80%" height="40%">
+			<div class="content" style="height: 100%">
+				<textarea c-bind="p" style="width: 100%;height: 100%;resize: none;"></textarea>
+			</div>
+			<div class="actions">
+				<c-button caption="取消" c-onclick="hide('dialog1')"></c-button>
+				<c-button caption="确认" c-onclick="hide('dialog1')" class="primary"></c-button>
+			</div>
+		</c-dialog>
+
+		<!--时间线-->
+		<c-timeline style="float: right;width: 80%">
+			<ul>
+				<li c-repeat="item in items">
+					<label>
+						<div c-bind="item.time.date"></div>
+					</label>
+					<icon>
+						<i c-class="item.icon" class="icon"></i>
+					</icon>
+					<content>
+						<strong c-bind="item.content.title"></strong>
+						<p c-bind="item.content.description"></p>
+					</content>
+				</li>
+			</ul>
+		</c-timeline>
+
+		<c-tree id="fileTree"></c-tree>
+	</div>
 	</body>
 </html>
