@@ -138,7 +138,6 @@
 					},
 					plus: function(){
 						console.log("添加")
-
 					},
 					minus: function(){
 						console.log("删除")
@@ -153,8 +152,11 @@
 					add: function (n) {
 						cola.widget(n).show();
 					},
-					hide: function (parent) {
-						cola.widget(parent).hide();
+					hide: function (n) {
+						cola.widget(n).hide();
+					},
+					show: function (n) {
+						cola.widget(n).show();
 					}
 				});
 
@@ -178,6 +180,7 @@
 					provider: "http://open-data.cola-ui.com/service/district/provinces"
 				});
 				model.widgetConfig({
+					//定义一个名为fileTree的属性配置
 					fileTree: {
 						bind: {
 							hasChildProperty: "isDir",
@@ -208,6 +211,10 @@
 							background: "#0a68b9",
 							transition: "1s"
 						},
+						click: function(){
+							console.log(1)
+							model.action("show")("sidebar");
+						},
 						content: [
 							{
 								//logo
@@ -235,11 +242,11 @@
 											console.log("要弹出搜索记录啦");
 											model.action("success")();//通过这种方式调用action中定义的函数
 										},
-										"c-onblur": function(){
-											console.log("我失焦了")
-											var txt = model.get("guolv");
-											console.log(txt)
-										}
+//				    					mouseenter: function(){
+//				    						console.log("我失焦了")
+//				    						var txt = model.get("guolv");
+//				    						console.log(txt)
+//				    					}
 									},
 									{
 										tagName: "span",
@@ -277,12 +284,75 @@
 					cola.widget("carousel1").play(2000);
 				});
 
+//				步骤控件
+				var steps = new cola.Steps({
+					size: "small",
+					style: {
+						float: "right",
+						width: "80%"
+					},
+					steps: [
+						{
+							icon: "home",
+							content: "设置属性",
+							states: "completed"
+						},
+						{
+							icon: "home",
+							content: "项目属性",
+							states: "active"
+						},
+						{
+							icon: "home",
+							content: "项目人员"
+						},
+						{
+							icon: "home",
+							content: "人员详细"
+						},
+						{
+							icon: "home",
+							content: "完成"
+						}
+					]
+				});
+				steps.appendTo($("#steps"));
+
+//				EChart地图
+//				let myChart = echarts.init($("map"));
+//				let option = {
+//					tooltip: {
+//						trigger: 'item',
+//						formatter: '{b}'
+//					},
+//					series: [
+//						{
+//							name: '中国',
+//							type: 'map',
+//							mapType: 'china',
+//							selectedMode : 'multiple',
+//							label: {
+//								normal: {
+//									show: true
+//								},
+//								emphasis: {
+//									show: true
+//								}
+//							},
+//							data:[
+//								{name:'广东', selected:true}
+//							]
+//						}
+//					]
+//				};
+//				myChart.setOption(option);
 			});
 		</script>
 		<title></title>
 	</head>
 	<body>
 	<div id="content">
+		<!--跑马灯-->
 		<c-carousel id="carousel1"  height="100" style="width: 80%;float: right;">
 			<div class="items-wrap">
 				<a href="#" class="blue-background"></a>
@@ -293,10 +363,13 @@
 		</c-carousel>
 
 		<div style="width: 80%;float: right;">
+			<!--面包屑-->
 			<c-breadcrumb bind="sections" itemClick="itemClick" style="width: 50%;float: left;padding: 10px;"></c-breadcrumb>
+			<!--进度条-->
 			<c-progress width="50%" value="{{progress}}" style="float: right;"></c-progress>
 		</div>
 
+		<!--菜单-->
 		<c-menu style="float: right;width: 80%;">
 			<a icon="plus" caption="添加" click="plus"></a>
 			<a icon="minus" caption="删除" click="minus"></a>
@@ -306,6 +379,7 @@
 			</div>
 		</c-menu>
 
+		<!--表格-->
 		<c-table bind="employee in filter(employees,guolv)"  sortMode="local" style="width: 80%;float: right;">
 			<!--这里的filter(employees,guolv)是过滤器,employees属性指绑定的数据,guolv与上面header中的搜索框数据对应-->
 			<template name="star">
@@ -325,6 +399,7 @@
 			</column>
 		</c-table>
 
+		<!--面板控件-->
 		<c-panel caption="面板控件" style="width: 80%;float: right">
 			<template name="tools">
 				<div>
@@ -366,7 +441,23 @@
 			</ul>
 		</c-timeline>
 
-		<c-tree id="fileTree"></c-tree>
+		<!--Echart地图-->
+		<!--<div id="map" style="width: 80%;height: 500px;"></div>-->
+
+		<!--步骤控件盒子-->
+		<div id="steps"></div>
+
+		<!--滑动分割面板-->
+		<c-split-pane direction="left" position="20%" style="float: right;width: 80%;height: 200px;border: 1px solid #00ACED;border-radius: 10px;overflow: hidden">
+			<div class="pane">这里是滑动分割面板,这里是滑动分割面板,这里是滑动分割面板,这里是滑动分割面板,这里是滑动分割面板,</div>
+			<div class="pane">这里是滑动分割面板,这里是滑动分割面板,这里是滑动分割面板,这里是滑动分割面板,这里是滑动分割面板,这里是滑动分割面板,</div>
+		</c-split-pane>
+
+		<!--侧边栏(点击header唤出)-->
+		<c-sidebar id="sidebar" direction="left" size="20%">
+			<!--树控件-->
+			<c-tree id="fileTree"></c-tree>
+		</c-sidebar>
 	</div>
 	</body>
 </html>
