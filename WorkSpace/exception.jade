@@ -1,0 +1,78 @@
+extends ./_page
+
+block body
+    .v-box
+        .box
+            c-panel.show-on-ready(caption="查询条件")
+                .content
+                    c-form#queryForm(bind="condition")
+                        fields.cols-2
+                            field(property="key")
+                            field(property="name")
+                        fields.cols-2
+                            field(property="typeId")
+                            field(property="kind")
+                        fields.cols-2
+                            field(property="label")
+                            field(property="viewName")
+                        fields.cols-2
+                            field(property="language")
+                            field(property="serviceName")
+                        fields.cols-1
+                            field
+                                .center(style="margin:0 auto")
+                                    c-button.primary(icon="search" caption="查询" click="query")
+                                    c-button(caption="重置" click="reset")
+            c-menu.secondary.bordered
+                a(caption="添加" icon="plus" click="add")
+                a(caption="删除" icon="minus" click="del")
+                a(caption="编辑" icon="edit" click="edit")
+                a(caption="保存" icon="save" click="save")
+                a(caption="RefreshCache" icon="" click="")
+                .right.menu
+                    c-pager.secondary.compact(bind="dataTypeItem")
+        .flex-box
+            div
+                c-table#currencyTable.impact.striped(height="100%" sortMode="local" bind="dataTypeItem")
+                    column($type="select" sortable="true")
+                    column(property="exceptionId" sortable="true")
+                    column(property="key" sortable="true")
+                    column(property="name" sortable="true")
+                    column(property="typeId" sortable="true")
+                    column(property="kind" sortable="true")
+                    column(property="label" sortable="true")
+                    column(property="viewName" sortable="true")
+                    column(property="serviceName" sortable="true")
+                    column(property="language" sortable="true")
+                c-dialog#dialog(width="100%" height="100%" closeable="false" animation="slide left")
+                    .content
+                        c-menu.secondary.bordered
+                            a.right(caption="关闭" click="back")
+                        c-form#queryForm(bind="dataTypeItem")
+                            fields.cols-2
+                                field(property="exceptionId" readOnly="true")
+                                field(property="typeId")
+                            fields.cols-2
+                                field(property="kind")
+                                field(property="name")
+                            fields.cols-2
+                                field(property="key")
+                                field(property="label")
+                            fields.cols-2
+                                field(property="language")
+                                field(property="viewName")
+                            fields.cols-2
+                                field(property="serviceName")
+                                field(property="formatDesc")
+                            fields.cols-1
+                                field(property="description")
+                            fields.cols-2
+                                field(property="createDate" readOnly="true")
+                                field(property="updateDate" readOnly="true")
+                            fields.cols-2
+                                field(property="createUserId" readOnly="true")
+                                field(property="updateUserId" readOnly="true")
+
+append scripts
+    script(src="type/Mine/exception.js")
+

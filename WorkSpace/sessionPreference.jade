@@ -1,0 +1,94 @@
+extends ./_page
+
+block body
+    .v-box
+        .box
+            c-panel.show-on-ready(caption="查询条件")
+                .content
+                    c-form#queryForm(bind="condition")
+                        fields.cols-2
+                            field(property="sessionPreferenceId")
+                            field(property="structureId")
+                        fields.cols-2
+                            field(property="locale")
+                            field(property="partyId")
+                        fields.cols-2
+                            field(property="userId")
+                            field(property="userName")
+                        fields.cols-2
+                            field(property="charset")
+                        fields.cols-1
+                            field
+                                .center(style="margin:0 auto")
+                                    c-button.primary(icon="search" caption="查询" click="query")
+                                    c-button(caption="重置" click="reset")
+            c-menu.secondary.bordered
+                a(caption="添加" icon="plus" click="add")
+                a(caption="删除" icon="minus" click="del")
+                a(caption="编辑" icon="edit" click="edit")
+                a(caption="保存" icon="save" click="save")
+                .right.menu
+                    c-pager.secondary.compact(bind="dataTypeItem")
+        .flex-box
+            div
+                c-table#currencyTable.impact.striped(height="100%" sortMode="local" bind="dataTypeItem")
+                    column($type="select" sortable="true")
+                    column(property="sessionPreferenceId" sortable="true")
+                    column(property="partyId" sortable="true")
+                    column(property="structureId" sortable="true")
+                    column(property="userName" sortable="true")
+                    column(property="userId" sortable="true")
+                    column(property="locale" sortable="true")
+                    column(property="charset" sortable="true")
+                    column(property="currency" sortable="true")
+                    column(property="theme" sortable="true")
+                    column(property="clientDevice" sortable="true")
+                    column(property="viewType" sortable="true")
+                    column(property="dataSource" sortable="true")
+                c-dialog#dialog(width="100%" height="100%" closeable="false" animation="slide left")
+                    .content
+                        c-menu.secondary.bordered
+                            a.right(caption="关闭" click="back")
+                        c-form#queryForm(bind="dataTypeItem")
+                            fields.cols-2
+                                field(property="sessionPreferenceId")
+                                field(property="locale")
+                            fields.cols-2
+                                field(property="partyId")
+                                field(property="structureId")
+                            fields.cols-2
+                                field(property="productId")
+                                field(property="caseDefinitionId")
+                            fields.cols-2
+                                field(property="partitionId")
+                                field(property="userName")
+                            fields.cols-2
+                                field(property="userId")
+                                field(property="tenantId")
+                            fields.cols-2
+                                field(property="entityManagerFactory" readOnly="true")
+                                field(property="currency" readOnly="true")
+                            fields.cols-2
+                                field(property="theme" readOnly="true")
+                                field(property="charset" readOnly="true")
+                            fields.cols-2
+                                field(property="clientDevice" readOnly="true")
+                                field(property="viewType" readOnly="true")
+                            fields.cols-2
+                                field(property="dataSource" readOnly="true")
+                                field(property="timestampFormatZone" readOnly="true")
+                            fields.cols-2
+                                field(property="dateFormat" readOnly="true")
+                                field(property="timeFormatZone" readOnly="true")
+                            fields.cols-2
+                                field(property="timeZone" readOnly="true")
+                                field(property="datetimeFormat" readOnly="true")
+                            fields.cols-2
+                                field(property="yearMonthFormat" readOnly="true")
+                                field(property="fiscalMonth" readOnly="true")
+                            fields.cols-2
+                                field(property="yearMonthFormatZone" readOnly="true")
+                                field(property="yearmonthFormat" readOnly="true")
+
+append scripts
+    script(src="type/Mine/sessionPreference.js")

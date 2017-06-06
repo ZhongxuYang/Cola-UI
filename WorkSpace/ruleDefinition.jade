@@ -1,0 +1,106 @@
+extends ./_page
+
+block body
+    .v-box
+        .box
+            c-panel.show-on-ready(caption="查询条件")
+                .content
+                    c-form#queryForm(bind="condition")
+                        fields.cols-2
+                            field
+                                label 类型
+                                c-dropdown(c-bind="condition.typeId" valueProperty="name" textProperty="name" c-items="dictionary('14000')")
+                            field(property="kind")
+                        fields.cols-2
+                            field(property="version")
+                            field
+                                label 状态
+                                c-dropdown(c-bind="condition.status" valueProperty="name" textProperty="name" c-items="dictionary('14002')")
+                        fields.cols-2
+                            field
+                                label 执行类型
+                                c-dropdown(c-bind="condition.executeType" valueProperty="name" textProperty="name" c-items="dictionary('14001')")
+                            field(property="packageName")
+                        fields.cols-1
+                            field
+                                .center(style="margin:0 auto")
+                                    c-button.primary(icon="search" caption="查询" click="query")
+                                    c-button(caption="重置" click="reset")
+            c-menu.secondary.bordered
+                a(caption="添加" icon="plus" click="add")
+                a(caption="删除" icon="minus" click="del")
+                a(caption="编辑" icon="edit" click="edit")
+                a(caption="保存" icon="save" click="save")
+                a(caption="RuleFileUpload" icon="" click="")
+                a(caption="DownloadRule" icon="" click="")
+                .right.menu
+                    c-pager.secondary.compact(bind="dataTypeItem")
+        .flex-box
+            div
+                c-table#currencyTable.impact.striped(height="100%" sortMode="local" bind="dataTypeItem")
+                    column($type="select" sortable="true")
+                    column(property="ruleDefinitionId" sortable="true")
+                    column(property="typeId" sortable="true")
+                    column(property="kind" sortable="true")
+                    column(property="name" sortable="true")
+                    column(property="version" sortable="true")
+                    column(property="status" sortable="true")
+                    column(property="packageName" sortable="true")
+                    column(property="startDate" sortable="true")
+                    column(property="endDate" sortable="true")
+                    column(property="executeType" sortable="true")
+                    column(property="contentId" sortable="true")
+                c-dialog#dialog(width="100%" height="100%" closeable="false" animation="slide left")
+                    .content
+                        c-menu.secondary.bordered
+                            a.right(caption="关闭" click="back")
+                        c-form#queryForm(bind="dataTypeItem")
+                            fields.cols-2
+                                field(property="ruleDefinitionId" readOnly="true")
+                                field
+                                    label 类型
+                                    c-dropdown(c-bind="dataTypeItem.typeId" valueProperty="name" textProperty="name" c-items="dictionary('14000')")
+                            fields.cols-2
+                                field
+                                    label 执行类型
+                                    c-dropdown(c-bind="dataTypeItem.executeType" valueProperty="name" textProperty="name" c-items="dictionary('14001')")
+                                field(property="kind")
+                            fields.cols-2
+                                field(property="name")
+                                field(property="contentId")
+                            fields.cols-2
+                                field(property="version")
+                                field(property="packageName")
+                            fields.cols-2
+                                field
+                                    label 生效日期
+                                    c-datepicker(bind="dataTypeItem.startDate")
+                                field
+                                    label 终止日期
+                                    c-datepicker(bind="dataTypeItem.endDate")
+                            fields.cols-2
+                                field
+                                    label 状态
+                                    c-dropdown(c-bind="dataTypeItem.status" valueProperty="name" textProperty="name" c-items="dictionary('14002')")
+                                field
+                                    label 状态日期
+                                    c-datepicker(bind="dataTypeItem.statusDate")
+                            fields.cols-2
+                                field(property="applicant")
+                                field(property="approval")
+                            fields.cols-2
+                                field(property="approver")
+                            fields.cols-1
+                                field(property="description")
+                            fields.cols-2
+                                field(property="ownerUserId")
+                                field(property="createDate" readOnly="true")
+                            fields.cols-2
+                                field(property="updateDate" readOnly="true")
+                                field(property="createUserId" readOnly="true")
+                            fields.cols-2
+                                field(property="updateUserId" readOnly="true")
+
+append scripts
+    script(src="type/Mine/ruleDefinition.js")
+
